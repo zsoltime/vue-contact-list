@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js Contact List by Zsolt Meszaros | Vue.js Challenge</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Check out my contact list app built with Vue.js during my Vue challenge.">
+  <link href="https://fonts.googleapis.com/css?family=Courgette|Lato:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <script type="text/x-template" id="contact">
+    <li class="contact">
+      <div class="contact__image">
+        <img :src="image">
+      </div>
+      <div class="contact__details">
+        <h2 class="contact__name">{{ name }}</h2>
+        <h3 class="contact__job">{{ job }}</h3>
+        <div class="contact__company">{{ company }}</div>
+        <div class="contact__email">
+          Email: <a :href="`mailto:${email}`">email</a>
+        </div>
+      </div>
+      <footer class="contact__actions">
+        <button
+          class="btn btn--edit"
+          type="button"
+          aria-label="Edit contact"
+          @click="editC"
+        >Edit</button>
+        <button
+          class="btn btn--delete"
+          type="button"
+          aria-label="Delete contact"
+          @click="deleteC"
+        >Delete</button>
+      </footer>
+    </li>
+  </script>
+  <div class="app" id="app">
+    <div class="container">
+      <header class="app__header">
+        <h1 class="app__title">Contacts</h1>
+        <div class="contacts__total">{{ contacts.length }} total</div>
+        <div class="contacts__sort">
+          <select name="sort" id="" v-model="sortBy">
+            <option value="date">Newest First</option>
+            <option value="name">Name</option>
+          </select>
+        </div>
+      </header>
+      <aside class="app__filter">
+        <form class="search-form">
+          <input
+            type="search"
+            class="search-form__field"
+            placeholder="Type the name or part of contact info to filter the list"
+            v-model="searchTerm"
+          />
+        </form>
+      </aside>
+      <main>
+        <ul class="contacts">
+          <contact
+            v-for="contact in contacts"
+            :key="contact.id"
+            :id="contact.id"
+            :name="`${contact.firstName} ${contact.lastName}`"
+            :job="contact.job"
+            :company="contact.company"
+            :email="contact.email"
+            :image="contact.image"
+            :edit-contact="editContact"
+            :delete-contact="deleteContact"
+          ></contact>
+        </ul>
+      </main>
+    </div>
+  </div>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
